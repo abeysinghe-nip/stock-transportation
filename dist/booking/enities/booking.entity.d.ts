@@ -1,0 +1,32 @@
+import { Customer } from "src/customer/entities/customer.entity";
+import { AdvancePayment } from "./advancePayment.entity";
+import { Vehicle } from "src/vehicle/entities/vehicle.entity";
+import { BalPayment } from "./balPayment.entity";
+import { SharedBooking } from "./sharedBooking.entity";
+export declare class Booking {
+    id: string;
+    createdAt: Date;
+    bookingDate: Date;
+    pickupTime: string;
+    loadingTime: number;
+    unloadingTime: number;
+    startLong: number;
+    startLat: number;
+    destLong: number;
+    destLat: number;
+    travellingTime: number;
+    vehicleCharge: number;
+    serviceCharge: number;
+    handlingCharge: number;
+    loadingCapacity: number;
+    isReturnTrip: boolean;
+    willingToShare: boolean;
+    avgHandlingTime: number;
+    status: string;
+    isCancelled: boolean;
+    customer: Customer;
+    vehicle: Vehicle;
+    advancePayment: AdvancePayment;
+    balPayment: BalPayment;
+    sharedBooking: SharedBooking[];
+}

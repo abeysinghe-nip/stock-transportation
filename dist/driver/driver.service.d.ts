@@ -1,0 +1,48 @@
+import { Driver } from './entities/driver.entity';
+import { Repository } from 'typeorm';
+import { TempDriver } from './entities/tempDriver.entity';
+import { DriverDto } from './dtos/driver.dto';
+import { CommonService } from 'src/common/common.service';
+import { Owner } from 'src/owner/entities/owner.entity';
+import { DriverVehicle } from './entities/driver.vehicle.entity';
+import { Vehicle } from 'src/vehicle/entities/vehicle.entity';
+import { Booking } from 'src/booking/enities/booking.entity';
+import { SharedBooking } from 'src/booking/enities/sharedBooking.entity';
+import { RideStartReq } from './requests/rideStart.req';
+import { RideGateway } from 'src/gateways/ride.gateways';
+import { RideStopReq } from './requests/rideStop.req';
+import { ChangePasswordReq } from '../common/requests/changePassword.req';
+import { UpdateProfileReq } from 'src/common/requests/updateProfile.req';
+import { DriverNotification } from './entities/driverNotification.entity';
+export declare class DriverService {
+    private driverRepo;
+    private tempDriverRepo;
+    private ownerRepo;
+    private bookingRepo;
+    private driverVehiRepo;
+    private sharedBookingRepo;
+    private notificationRepo;
+    private readonly commonService;
+    private readonly rideGateway;
+    constructor(driverRepo: Repository<Driver>, tempDriverRepo: Repository<TempDriver>, ownerRepo: Repository<Owner>, bookingRepo: Repository<Booking>, driverVehiRepo: Repository<DriverVehicle>, sharedBookingRepo: Repository<SharedBooking>, notificationRepo: Repository<DriverNotification>, commonService: CommonService, rideGateway: RideGateway);
+    tempCreate(driverDto: DriverDto): Promise<Driver>;
+    emailAvilability(email: string): Promise<boolean>;
+    signin(email: string): Promise<Driver>;
+    getAssignedVehicle(id: string): Promise<Vehicle>;
+    getBookings(vehicle: Vehicle): Promise<Booking[]>;
+    getSharedBookings(vehicle: Vehicle): Promise<SharedBooking[]>;
+    getSharedBooking(bookingId: string): Promise<SharedBooking[]>;
+    startRide(rideStartReq: RideStartReq): Promise<any>;
+    stopRide(driverId: string, rideStopReq: RideStopReq): Promise<{
+        cusFName: string;
+        cusLName: string;
+        email: string;
+        driverFName: string;
+        driverLName: string;
+        driverPNo: string;
+    }>;
+    changePassword(id: string, passwordReq: ChangePasswordReq): Promise<Driver>;
+    getProfile(id: string): Promise<Driver>;
+    updateProfile(id: string, updateReq: UpdateProfileReq): Promise<Driver>;
+    getNotifications(id: string): Promise<DriverNotification[]>;
+}

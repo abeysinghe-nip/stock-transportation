@@ -1,0 +1,36 @@
+import { Booking } from "src/booking/enities/booking.entity";
+import { SharedBooking } from "src/booking/enities/sharedBooking.entity";
+import { BookingCompleteRes } from "src/driver/responses/bookingComplete.res";
+import { Repository } from "typeorm";
+import { CustomerOtp } from "./entities/customerOtp.entity";
+import { OwnerOtp } from "./entities/ownerOtp.entity";
+import { DriverOtp } from "./entities/driverOtp.entity";
+import { Customer } from "src/customer/entities/customer.entity";
+import { Owner } from "src/owner/entities/owner.entity";
+import { Driver } from "src/driver/entities/driver.entity";
+import { OtpReq } from "./requests/otp.req";
+import { Response } from "express";
+import { Password } from "./requests/password.req";
+import { CustomerFeedback } from "./entities/customerFeedback.entity";
+export declare class CommonService {
+    private bookingRepo;
+    private sharedBookingRepo;
+    private customerOtpRepo;
+    private ownerOtpRepo;
+    private driverOtpRepo;
+    private customerRepo;
+    private ownerRepo;
+    private driverRepo;
+    private feedbackRepo;
+    constructor(bookingRepo: Repository<Booking>, sharedBookingRepo: Repository<SharedBooking>, customerOtpRepo: Repository<CustomerOtp>, ownerOtpRepo: Repository<OwnerOtp>, driverOtpRepo: Repository<DriverOtp>, customerRepo: Repository<Customer>, ownerRepo: Repository<Owner>, driverRepo: Repository<Driver>, feedbackRepo: Repository<CustomerFeedback>);
+    calPaymentSummery(bookingId: string, bookingType: string): Promise<BookingCompleteRes>;
+    sendNotifications(email: string, subject: string, message: string): Promise<any>;
+    private transporter;
+    passwordEncrypt(password: string): Promise<string>;
+    passwordDecrypt(hash: string, password: string): Promise<boolean>;
+    genarateOtp(userEmail: string, userType: string): Promise<any>;
+    verifyOtp(userType: string, userId: string, otp: OtpReq, res: Response): Promise<Response<any, Record<string, any>>>;
+    changePassword(userId: string, userType: string, password: Password): Promise<Customer | Owner | Driver>;
+    getFeedbacks(): Promise<CustomerFeedback[]>;
+    private checkOtpExpired;
+}
